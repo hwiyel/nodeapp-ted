@@ -10,17 +10,27 @@
   </head>
 
   <body>
-    <table>
-      <tr>
-        <td style= "width:30%;">
-          <img class = "newappIcon" src="images/newapp-icon.png">
-        </td>
-        <td>
-          <h1 id="message">Hello World!</h1>
-          <p class='description'></p> Thanks for creating a <span class = "blue">NodeJS Starter Application</span>.
-        </td>
-      </tr>
-    </table>
+  <ul id="msgs"></ul>
+  <form>
+  	<input id="m"><button type="submit">SEND</button></input>
+  </form>
+  
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+  <script>
+  var socket = new io();
+  
+  $("form").submit(function(){
+  	socket.emit("P",$("#m").val());
+  	$("#m").val("");
+  	return false;
+  });
+  
+  socket.on("P",function(msg){
+  	$("#msgs").append($("<li>").text(msg));
+  });
+  </script>  
+  
   </body>
 
 </html>
